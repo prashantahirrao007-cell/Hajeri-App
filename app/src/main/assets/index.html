@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4338CA">
+<title>Hazri – Attendance</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#F5F6FA;--card:#fff;--ink:#14161F;--mute:#5B6070;--line:#E6E8F0;--pri:#4338CA;--onpri:#fff;--soft:#E3E1FF;--softink:#3730A3;--okbg:#DDF4EF;--ok:#0B6B5E;--latebg:#FFF0D6;--late:#8A4B00;--err:#A32035;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1117;--card:#1A1D27;--ink:#F2F3F8;--mute:#A3A9BC;--line:#2A2E3B;--pri:#8A83FF;--onpri:#0F1117;--soft:#2A2766;--softink:#C7CCFF;--okbg:#12332E;--ok:#6EE7D0;--latebg:#3A2A0C;--late:#FBBF6A;--err:#FF8A9B;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1117;--card:#1A1D27;--ink:#F2F3F8;--mute:#A3A9BC;--line:#2A2E3B;--pri:#8A83FF;--onpri:#0F1117;--soft:#2A2766;--softink:#C7CCFF;--okbg:#12332E;--ok:#6EE7D0;--latebg:#3A2A0C;--late:#FBBF6A;--err:#FF8A9B;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.4 Inter,system-ui,sans-serif}
+#app{height:100%;max-width:430px;margin:0 auto;display:flex;flex-direction:column}
+.main{flex:1;overflow-y:auto;padding:28px 20px 16px;display:flex;flex-direction:column;gap:16px}
+h1{margin:2px 0 0;font-size:26px;letter-spacing:-.5px;line-height:1.15}
+.sub{font-size:14px;color:var(--mute)}
+small{font-size:13px;color:var(--mute)}
+.card{background:var(--card);border-radius:24px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.hero{background:#4338CA;color:#fff;border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.hero .r{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500}
+.hero .chip{font-size:13px;background:#5B52D6;padding:6px 12px;border-radius:20px}
+.hero .clk{font-size:48px;font-weight:700;letter-spacing:-2px;line-height:1}
+.hero .loc{display:flex;align-items:center;gap:8px;font-size:14px;color:#E0E7FF}
+.hbtn{height:56px;border:0;border-radius:28px;background:#fff;color:#3730A3;font:700 17px Inter,sans-serif;cursor:pointer}
+.hbtn:disabled{background:#6B63DD;color:#fff;cursor:default}
+.stats{display:flex;gap:12px}
+.stat{flex:1;background:var(--card);border-radius:20px;padding:14px 16px}
+.stat b{display:block;font-size:24px}.stat span{font-size:13px;color:var(--mute)}
+.row{background:var(--card);border-radius:20px;padding:12px 16px;display:flex;align-items:center;gap:14px}
+.dt{width:44px;text-align:center}.dt b{display:block;font-size:20px}.dt span{font-size:12px;color:var(--mute)}
+.fl{flex:1;min-width:0}.fl b{display:block;font-size:15px}
+.pill{font-size:12px;font-weight:600;padding:6px 12px;border-radius:14px;white-space:nowrap}
+.ok{background:var(--okbg);color:var(--ok)}.lt{background:var(--latebg);color:var(--late)}.gray{background:var(--line);color:var(--ink)}
+.av{width:44px;height:44px;border-radius:50%;background:var(--soft);color:var(--softink);display:flex;align-items:center;justify-content:center;font-weight:600;flex:none}
+.av.lg{width:72px;height:72px;font-size:24px}
+.btn{min-height:52px;border:0;border-radius:26px;background:var(--pri);color:var(--onpri);font:700 16px Inter,sans-serif;cursor:pointer}
+.btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+label{font-size:13px;font-weight:600}
+input{height:50px;border:1px solid var(--line);border-radius:14px;padding:0 14px;font:16px Inter,sans-serif;background:var(--bg);color:var(--ink)}
+input:focus-visible,button:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.err{min-height:18px;color:var(--err);font-size:13px}
+.login{justify-content:center}
+.logo{width:64px;height:64px;border-radius:20px;background:#4338CA;color:#fff;display:flex;align-items:center;justify-content:center}
+.demo{display:flex;justify-content:space-between;align-items:center;min-height:48px;border:1px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);padding:0 14px;font:14px Inter,sans-serif;cursor:pointer}
+.demo span{color:var(--mute)}
+.bar{height:10px;border-radius:5px;background:var(--soft)}.bar i{display:block;height:10px;border-radius:5px;background:var(--pri)}
+.big{font-size:36px;font-weight:700;letter-spacing:-1px}.big span{font-size:14px;color:var(--mute);font-weight:400;letter-spacing:0}
+.pf{align-items:center;text-align:center}
+.note{font-size:13px;color:var(--mute);text-align:center}
+h2{margin:0 0 -6px;font-size:16px}
+nav{flex:none;display:flex;justify-content:space-around;background:var(--card);border-top:1px solid var(--line);padding:8px 0}
+nav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:72px;min-height:48px;font:600 12px Inter,sans-serif;color:var(--mute);cursor:pointer}
+nav button span{display:flex;padding:4px 20px;border-radius:16px}
+nav button.on{color:var(--softink)}nav button.on span{background:var(--soft)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const USERS={
+  EMP001:{name:'Rohan Deshmukh',pw:'1234',role:'emp',dept:'Design Team'},
+  EMP002:{name:'Priya Sharma',pw:'1234',role:'emp',dept:'Operations'},
+  ADMIN01:{name:'Admin',pw:'admin123',role:'admin'}
+};
+const $=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(2,'0');
+const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const hm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
+const mins=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+const f12=t=>{if(!t)return '—';const [h,m]=t.split(':').map(Number);return pad(h%12||12)+':'+pad(m)+' '+(h<12?'AM':'PM')};
+const dur=(a,b)=>{const d=mins(b)-mins(a);return Math.floor(d/60)+'h '+pad(d%60)+'m'};
+const isLate=t=>mins(t)>mins('09:45');
+const ini=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const IC={
+  home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  hist:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+  team:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5M17 5a3.5 3.5 0 0 1 0 6.5M19 14.7c2 .7 3 2.2 3 5.3"/>',
+  pin:'<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  check:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>'
+};
+const ic=(n,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]}</svg>`;
+
+function seed(){
+  const L={},P={EMP001:['09:18','09:52','09:20','09:25','09:12','09:31'],EMP002:['09:05','09:28','09:49','09:15','09:22','09:40']},O=['18:35','18:30','18:31','18:40','18:22','18:36'];
+  for(const id in P){L[id]={};const d=new Date();let i=0;
+    while(i<6){d.setDate(d.getDate()-1);if(d.getDay()%6===0)continue;L[id][key(d)]={in:P[id][i],out:O[i]};i++}}
+  return L;
+}
+let db;try{db=JSON.parse(store.get('hazri_db'))}catch(e){}
+if(!db||!db.EMP001)db=seed();
+const save=()=>store.set('hazri_db',JSON.stringify(db));
+let user=null,tab='home';
+const sid=store.get('hazri_user');
+if(sid&&USERS[sid])user={id:sid,...USERS[sid]};
+
+const pill=t=>t?(isLate(t)?'<span class="pill lt">Late</span>':'<span class="pill ok">Present</span>'):'<span class="pill gray">Not in</span>';
+const stat=(v,l)=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`;
+const today=()=>new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short'});
+function row(dk,e){
+  const d=new Date(dk+'T00:00:00');
+  return `<div class="row"><div class="dt"><b>${d.getDate()}</b><span>${d.toLocaleDateString('en-IN',{weekday:'short'})}</span></div><div class="fl"><b>${f12(e.in)} – ${f12(e.out)}</b><small>${e.out?dur(e.in,e.out):'Still working'}</small></div>${pill(e.in)}</div>`;
+}
+
+function login(err){
+  return `<main class="main login"><div class="logo">${ic('check',34)}</div><div><h1>Hazri</h1><div class="sub">Mark your attendance in one tap</div></div>
+  <form class="card" autocomplete="on"><label for="id">Employee ID</label><input id="id" autocomplete="username" autocapitalize="characters" required>
+  <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
+  <div class="err" role="alert">${err||''}</div><button class="btn">Sign in</button></form>
+  <div class="card"><div class="sub">Demo accounts – tap to fill</div>${Object.keys(USERS).map(i=>`<button type="button" class="demo" data-act="fill" data-v="${i}"><b>${i}</b><span>${USERS[i].name} · ${USERS[i].pw}</span></button>`).join('')}</div></main>`;
+}
+
+function home(){
+  const L=db[user.id],k=key(new Date()),e=L[k],ks=Object.keys(L).sort().reverse();
+  const lt=ks.filter(x=>isLate(L[x].in)).length,fin=ks.filter(x=>L[x].out);
+  const avg=fin.length?(fin.reduce((s,x)=>s+mins(L[x].out)-mins(L[x].in),0)/fin.length/60).toFixed(1)+'h':'—';
+  let st,btn;
+  if(!e){st='Not checked in yet';btn='<button class="hbtn" data-act="in">Check in</button>'}
+  else if(!e.out){st='Checked in at '+f12(e.in)+(isLate(e.in)?' · Late':'');btn='<button class="hbtn" data-act="out">Check out</button>'}
+  else{st='Day complete · '+dur(e.in,e.out);btn='<button class="hbtn" disabled>Done for today</button>'}
+  return `<div class="top"><div><div class="sub">${today()}</div><h1>Namaste, ${user.name.split(' ')[0]}</h1></div><div class="av">${ini(user.name)}</div></div>
+  <div class="hero"><div class="r"><span>Today’s shift</span><span class="chip">9:30 AM – 6:30 PM</span></div>
+  <div class="clk" id="clk">${f12(hm(new Date()))}</div>
+  <div class="loc">${ic('pin',18)}Main Office · inside the zone (demo)</div>
+  <div role="status" style="font-size:15px;font-weight:600">${st}</div>${btn}</div>
+  <div class="stats">${stat(ks.length,'Present days')}${stat(lt,'Late days')}${stat(avg,'Avg. hours')}</div>
+  <h2>Recent days</h2>${ks.slice(0,3).map(x=>row(x,L[x])).join('')}`;
+}
+
+function hist(){
+  const L=db[user.id],ks=Object.keys(L).sort().reverse(),n=ks.length,lt=ks.filter(x=>isLate(L[x].in)).length;
+  return `<h1>History</h1><div class="card"><div class="big">${n}<span> days recorded</span></div><div class="bar"><i style="width:${n?Math.round((n-lt)/n*100):0}%"></i></div><small>${n-lt} on time · ${lt} late</small></div>${ks.map(x=>row(x,L[x])).join('')}`;
+}
+
+function team(){
+  const k=key(new Date()),emps=Object.keys(USERS).filter(i=>USERS[i].role==='emp'),n=emps.filter(i=>db[i][k]).length;
+  return `<div><div class="sub">${today()}</div><h1>Team today</h1></div>
+  <div class="stats">${stat(n,'Checked in')}${stat(emps.length-n,'Not yet')}${stat(emps.length,'Total')}</div>
+  ${emps.map(i=>{const e=db[i][k];return `<div class="row"><div class="av">${ini(USERS[i].name)}</div><div class="fl"><b>${USERS[i].name}</b><small>${i} · ${e?f12(e.in)+(e.out?' – '+f12(e.out):' · working'):'No check-in yet'}</small></div>${pill(e&&e.in)}</div>`}).join('')}
+  <div class="note">Demo: you see check-ins made on this device.</div>`;
+}
+
+function me(){
+  return `<h1>Profile</h1><div class="card pf"><div class="av lg">${ini(user.name)}</div><b>${user.name}</b><small>${user.id} · ${user.dept||'Administrator'}</small></div>
+  <button class="btn sec" data-act="reset">Reset demo data</button><button class="btn" data-act="logout">Sign out</button>`;
+}
+
+function render(err){
+  const A=$('#app');
+  if(!user){A.innerHTML=login(err);return}
+  const tabs=user.role==='admin'?[['team','Team','team'],['me','Profile','user']]:[['home','Home','home'],['hist','History','hist'],['me','Profile','user']];
+  if(!tabs.some(t=>t[0]===tab))tab=tabs[0][0];
+  const body={home,hist,team,me}[tab]();
+  A.innerHTML=`<main class="main">${body}</main><nav aria-label="Main">${tabs.map(([k,l,i])=>`<button data-act="tab" data-v="${k}" class="${tab===k?'on':''}"><span>${ic(i)}</span>${l}</button>`).join('')}</nav>`;
+}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act,v=b.dataset.v;
+  if(a==='tab'){tab=v;render()}
+  else if(a==='fill'){$('#id').value=v;$('#pw').value=USERS[v].pw}
+  else if(a==='in'||a==='out'){
+    const L=db[user.id],k=key(new Date());
+    if(a==='in')L[k]={in:hm(new Date())};else if(L[k])L[k].out=hm(new Date());
+    save();render();
+  }
+  else if(a==='reset'){db=seed();save();render()}
+  else if(a==='logout'){user=null;store.set('hazri_user','');tab='home';render()}
+});
+document.addEventListener('submit',e=>{
+  e.preventDefault();
+  const id=$('#id').value.trim().toUpperCase(),pw=$('#pw').value,u=USERS[id];
+  if(u&&u.pw===pw){user={id,...u};store.set('hazri_user',id);tab=u.role==='admin'?'team':'home';render()}
+  else render('Wrong ID or password. Tap a demo account below.');
+});
+setInterval(()=>{const c=$('#clk');if(c)c.textContent=f12(hm(new Date()))},1000);
+render();
+</script>
+</body>
+</html>
