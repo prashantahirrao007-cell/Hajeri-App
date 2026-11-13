@@ -1,22 +1,14 @@
-HAZRI - Attendance App (Android project)
+HAZRI PRO v3.0 - Android project
 
-Demo login:  EMP001 / 1234   EMP002 / 1234   ADMIN01 / admin123
+SHIFT: 10:00 AM - 6:00 PM. Late after 10:15 AM (15 min grace).
+Check-in/out needs a live selfie + GPS location (camera and location permission).
 
-APK BANANE KE 2 TARIKE
+LOGIN (ID / Password)
+ prashant / Prashant@123    jitendra / Jitendra@123
+ tejashree / Tejashree@123  dipak / Dipak@123
+ admin / Admin@123 (Administrator: sets office location, approves leave, sees photos)
 
-A) Bina Android Studio ke (GitHub se, ~5 min)
- 1. github.com par free account banayein, New repository banayein.
- 2. Is zip ka poora content (hidden folder .github samet) repository mein upload karein
-    (git push ya "Add file > Upload files").
- 3. Repository ke "Actions" tab mein "Build APK" > "Run workflow" dabayein.
- 4. Build poora hone par run kholein, neeche Artifacts mein "Hazri-apk" download karein.
-    Zip kholne par app-debug.apk milegi.
-
-B) Android Studio se
- 1. Android Studio mein "Open" se is folder ko kholein, Gradle sync hone dein.
- 2. Menu: Build > Build APK(s). APK app/build/outputs/apk/debug/ mein milegi.
-
-PHONE MEIN INSTALL
- APK ko phone mein bhejein, kholein, aur "Install unknown apps" ki permission dein.
-
-NOTE: App ka design/code app/src/main/assets/index.html mein hai. Data usi phone mein save hota hai.
+BUILD APK
+ 1. Upload all files (including the .github folder) to a GitHub repository.
+ 2. Actions > Build APK > Run workflow.
+ 3. Download Artifacts > Hazri-apk, extract, install app-debug.apk. Allow Camera and Location.
